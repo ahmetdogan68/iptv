@@ -1,3 +1,7 @@
 #EXTM3U
-#EXTINF:-1 tvg-name="AKSARAY IN SESI" group-title="Canli",AKSARAY IN SESI - Anadolu Hisari
+#EXTINF:-1,AKSARAY IN SESI - 1 (Ana)
 https://c.serverspace.org.in/youtube/live/Lr0kzGOOD4s/hls.m3u8
+#EXTINF:-1,AKSARAY IN SESI - 2 (Yedek)
+https://ytlive.jeanl.it/api/Lr0kzGOOD4s.m3u8
+#EXTINF:-1,AKSARAY IN SESI - 3 (Direkt YouTube)
+https://www.youtube.com/watch?v=Lr0kzGOOD4s
