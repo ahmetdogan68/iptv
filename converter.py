@@ -1,31 +1,16 @@
-import subprocess
-import json
+import requests
 
-YOUTUBE_URL = "https://www.youtube.com/watch?v=Lr0kzGOOD4s"
+VIDEO_ID = "Lr0kzGOOD4s"
 
-def get_m3u8():
-    try:
-        # 1. Yöntem: Direkt link al
-        cmd = ["yt-dlp", "--no-warnings", "-g", "-f", "b", YOUTUBE_URL]
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-        if result.stdout.strip():
-            return result.stdout.strip().split('\n')[0]
-
-        # 2. Yöntem: JSON'dan bul
-        cmd = ["yt-dlp", "-j", "--no-warnings", YOUTUBE_URL]
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
-        data = json.loads(result.stdout)
-        for fmt in data.get('formats', []):
-            url = fmt.get('url', '')
-            if 'm3u8' in url:
-                return url
-        return data.get('url', '')
-    except Exception as e:
-        print(f"Hata: {e}")
-        return ""
-
-m3u8 = get_m3u8()
-print(f"Bulunan: {m3u8}")
+# YouTube'a değmeden Piped üzerinden m3u8 alıyoruz
+try:
+    r = requests.get(f"https://pipedapi.kavin.rocks/streams/{VIDEO_ID}", timeout=20)
+    data = r.json()
+    m3u8 = data.get("hls")  # Bu zaten .m3u8 linki
+    print(f"Bulunan m3u8: {m3u8}")
+except Exception as e:
+    print(f"Hata: {e}")
+    m3u8 = ""
 
 with open("playlist.m3u", "w", encoding="utf-8") as f:
     f.write("#EXTM3U\n")
@@ -33,5 +18,4 @@ with open("playlist.m3u", "w", encoding="utf-8") as f:
     if m3u8:
         f.write(m3u8 + "\n")
     else:
-        # Yedek: YouTube direkt link
-        f.write("https://www.youtube.com/watch?v=Lr0kzGOOD4s\n")
+        f.write(f"https://www.youtube.com/watch?v={VIDEO_ID}\n")
