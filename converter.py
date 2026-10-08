@@ -1,24 +1,27 @@
-import urllib.request
-import json
+import urllib.request, json, os
 
 VIDEO_ID = "Lr0kzGOOD4s"
+out = "playlist.m3u"
 
-m3u8 = ""
+# Direkt IBB + radyo mantigi - senin PC'deki gibi sesli m3u degil ama stabil olan
+# YouTube m3u'sunu cekmeyi dener, olmazsa IBB'yi yazar
+m3u8_link = "https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8"
+
 try:
-    url = f"https://pipedapi.kavin.rocks/streams/{VIDEO_ID}"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=20) as response:
-        data = json.loads(response.read().decode())
-        m3u8 = data.get("hls", "")
-        print(f"Bulunan m3u8: {m3u8}")
+    # YouTube'u m3u8'e cevirme denemesi
+    api = f"https://pipedapi.kavin.rocks/streams/{VIDEO_ID}"
+    req = urllib.request.Request(api, headers={"User-Agent":"Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        j = json.loads(r.read().decode())
+        if j.get("hls"):
+            m3u8_link = j["hls"]
+            print("YouTube m3u8 bulundu")
 except Exception as e:
-    print(f"Hata: {e}")
+    print(f"YouTube alinamadi, IBB kullaniliyor: {e}")
 
-with open("playlist.m3u", "w", encoding="utf-8") as f:
+with open(out, "w", encoding="utf-8") as f:
     f.write("#EXTM3U\n")
-    f.write('#EXTINF:-1 tvg-name="AKSARAY IN SESI" group-title="Canli",AKSARAY IN SESI - Anadolu Hisari\n')
-    if m3u8:
-        f.write(m3u8 + "\n")
-    else:
-        # Yedek olarak direkt kamera
-        f.write("https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8\n")
+    f.write(f'#EXTINF:-1 tvg-name="AKSARAYIN SESI",AKSARAYIN SESI - Canli\n')
+    f.write(m3u8_link + "\n")
+
+print(f"Yazildi: {m3u8_link}")
