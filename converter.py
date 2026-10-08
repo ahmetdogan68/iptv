@@ -1,16 +1,18 @@
-import requests
+import urllib.request
+import json
 
 VIDEO_ID = "Lr0kzGOOD4s"
 
-# YouTube'a değmeden Piped üzerinden m3u8 alıyoruz
+m3u8 = ""
 try:
-    r = requests.get(f"https://pipedapi.kavin.rocks/streams/{VIDEO_ID}", timeout=20)
-    data = r.json()
-    m3u8 = data.get("hls")  # Bu zaten .m3u8 linki
-    print(f"Bulunan m3u8: {m3u8}")
+    url = f"https://pipedapi.kavin.rocks/streams/{VIDEO_ID}"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=20) as response:
+        data = json.loads(response.read().decode())
+        m3u8 = data.get("hls", "")
+        print(f"Bulunan m3u8: {m3u8}")
 except Exception as e:
     print(f"Hata: {e}")
-    m3u8 = ""
 
 with open("playlist.m3u", "w", encoding="utf-8") as f:
     f.write("#EXTM3U\n")
@@ -18,4 +20,5 @@ with open("playlist.m3u", "w", encoding="utf-8") as f:
     if m3u8:
         f.write(m3u8 + "\n")
     else:
-        f.write(f"https://www.youtube.com/watch?v={VIDEO_ID}\n")
+        # Yedek olarak direkt kamera
+        f.write("https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8\n")
