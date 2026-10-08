@@ -1,3 +1,19 @@
 #!/bin/sh
-ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8" -i "https://stream.turkiyeradyolari.com:8100/stream" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 128k -f hls -hls_time 6 -hls_list_size 12 -hls_flags delete_segments+append_list /app/live/playlist.m3u8 &
+mkdir -p /app/live/cam1 /app/live/cam2 /app/live/cam3 /app/live/cam4 /app/live/cam5
+
+# 1. BEYAZIT KULESI 2 + AKSARAY AR RADYO
+ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/beyazitkulesi2.stream/playlist.m3u8" -i "https://radyo.yayindakiler.com:4036/" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 128k -f hls -hls_time 6 -hls_list_size 12 -hls_flags delete_segments+append_list /app/live/cam1/playlist.m3u8 &
+
+# 2. SARACHANE + AKSARAY FM
+ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/sarachane.stream/playlist.m3u8" -i "https://stream.turkiyeradyolari.com:9332/stream" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 128k -f hls -hls_time 6 -hls_list_size 12 -hls_flags delete_segments+append_list /app/live/cam2/playlist.m3u8 &
+
+# 3. TAKSIM + AKSARAY RADYO 68
+ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/taksim.stream/playlist.m3u8" -i "https://radyo.yayindakiler.com:4022/" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 128k -f hls -hls_time 6 -hls_list_size 12 -hls_flags delete_segments+append_list /app/live/cam3/playlist.m3u8 &
+
+# 4. PIERRE LOTI + AKSARAY MAVI
+ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/pierreloti.stream/playlist.m3u8" -i "https://radyo.yayindakiler.com:4026/" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 128k -f hls -hls_time 6 -hls_list_size 12 -hls_flags delete_segments+append_list /app/live/cam4/playlist.m3u8 &
+
+# 5. ANADOLU HISARI + AKSARAYIN SESI - SENIN ESKI YAYIN
+ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8" -i "https://stream.turkiyeradyolari.com:8100/stream" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 128k -f hls -hls_time 6 -hls_list_size 12 -hls_flags delete_segments+append_list /app/live/cam5/playlist.m3u8 &
+
 python3 -m http.server 10000 --directory /app/live
