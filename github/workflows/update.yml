@@ -4,7 +4,7 @@ permissions:
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/30 * * * *'
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -14,14 +14,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Kutuphaneleri yukle
-        run: pip install requests
+      - name: Gereksinimleri yukle
+        run: pip install -r requirements.txt
       - name: m3u olustur
         run: python converter.py
-      - name: GitHub'a kaydet
+      - name: Kaydet
         run: |
-          git config user.name "aksaray-bot"
-          git config user.email "bot@aksaray.com"
+          git config user.name "bot"
+          git config user.email "bot@bot.com"
           git add playlist.m3u
-          git commit -m "m3u guncellendi" || exit 0
+          git commit -m "guncellendi" || exit 0
           git push
