@@ -1,27 +1,39 @@
-import urllib.request, json, os
+import yt_dlp
+import os
 
-VIDEO_ID = "Lr0kzGOOD4s"
-out = "playlist.m3u"
+PLAYLIST_URL = "https://www.youtube.com/playlist?list=PLd9UYE5KWtgsPfXRae7puW1inYgAwgSvn"
 
-# Direkt IBB + radyo mantigi - senin PC'deki gibi sesli m3u degil ama stabil olan
-# YouTube m3u'sunu cekmeyi dener, olmazsa IBB'yi yazar
-m3u8_link = "https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8"
+def get_youtube_streams():
+    ydl_opts = {
+        'quiet': True,
+        'extract_flat': False,
+        'skip_download': True,
+    }
+    streams = []
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(PLAYLIST_URL, download=False)
+        for entry in info['entries']:
+            try:
+                # her videonun direkt m3u8'ini al
+                video_url = f"https://www.youtube.com/watch?v={entry['id']}"
+                v_info = ydl.extract_info(video_url, download=False)
+                for f in v_info.get('formats', []):
+                    if f.get('ext') == 'mp4' and f.get('acodec') != 'none' and f.get('vcodec') != 'none':
+                        streams.append((entry['title'], f['url']))
+                        break
+            except:
+                continue
+    return streams
 
-try:
-    # YouTube'u m3u8'e cevirme denemesi
-    api = f"https://pipedapi.kavin.rocks/streams/{VIDEO_ID}"
-    req = urllib.request.Request(api, headers={"User-Agent":"Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        j = json.loads(r.read().decode())
-        if j.get("hls"):
-            m3u8_link = j["hls"]
-            print("YouTube m3u8 bulundu")
-except Exception as e:
-    print(f"YouTube alinamadi, IBB kullaniliyor: {e}")
+# mevcut playlist.m3u'yu oku
+with open('playlist.m3u', 'r', encoding='utf-8') as f:
+    old = f.read()
 
-with open(out, "w", encoding="utf-8") as f:
-    f.write("#EXTM3U\n")
-    f.write(f'#EXTINF:-1 tvg-name="AKSARAYIN SESI",AKSARAYIN SESI - Canli\n')
-    f.write(m3u8_link + "\n")
+# youtube'ları ekle
+with open('playlist.m3u', 'w', encoding='utf-8') as out:
+    out.write(old + "\n")
+    for title, url in get_youtube_streams():
+        clean = title.replace(',', ' ').replace('\n',' ')
+        out.write(f'#EXTINF:-1 group-title="YouTube",{clean}\n{url}\n')
 
-print(f"Yazildi: {m3u8_link}")
+print("playlist.m3u guncellendi - youtube eklendi")
