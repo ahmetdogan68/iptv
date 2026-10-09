@@ -1,0 +1,29 @@
+name: YouTube to M3U
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # her gün sabah 3'te güncelle
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install yt-dlp
+      - run: |
+          yt-dlp --flat-playlist --print "%(title)s|%(id)s" "https://www.youtube.com/playlist?list=PLd9UYE5KWtgsPfXRae7puW1inYgAwgSvn" > list.txt
+          echo "#EXTM3U" > youtube.m3u
+          while IFS='|' read -r title id; do
+            echo "#EXTINF:-1,$title" >> youtube.m3u
+            echo "https://www.youtube.com/watch?v=$id" >> youtube.m3u
+          done < list.txt
+      - run: |
+          git config user.name "bot"
+          git config user.email "bot@bot.com"
+          git add youtube.m3u
+          git commit -m "youtube m3u guncelle" || exit 0
+          git push
