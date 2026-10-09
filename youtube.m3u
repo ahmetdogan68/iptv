@@ -1,3 +1,2 @@
-#EXTM3U
-#EXTINF:-1 tvg-logo="https://i.ytimg.com/vi/X98xui3q__M/hqdefault.jpg" group-title="YouTube",Youtube Video
-https://www.youtube.com/watch?v=X98xui3q__M
+#EXTINF:-1 group-title="YouTube" tvg-logo="https://www.youtube.com/s/desktop/12d6b690/img/favicon_144x144.png",PLd9UYE5KWtgsPfXRae7puW1inYgAwgSvn
+https://www.youtube.com/watch?v=X98xui3q__M&list=PLd9UYE5KWtgsPfXRae7puW1inYgAwgSvn
