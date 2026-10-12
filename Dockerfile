@@ -4,5 +4,5 @@ RUN mkdir -p /app/live
 WORKDIR /app
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
-EXPOSE 10000
+EXPOSE 8080
 CMD ["/bin/sh", "/app/start.sh"]
