@@ -1,6 +1,6 @@
 FROM alpine:latest
-RUN apk add --no-cache ffmpeg nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-CMD ["/start.sh"]
+RUN apk add --no-cache ffmpeg nginx bash
+WORKDIR /app
+COPY. /app
+RUN chmod +x /app/start.sh
+CMD ["/bin/sh", "/app/start.sh"]
