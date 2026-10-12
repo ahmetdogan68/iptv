@@ -12,4 +12,4 @@ ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://ka
 ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/pierreloti.stream/playlist.m3u8" -i "https://radyo.yayindakiler.com:4026/" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 96k -f hls -hls_time 6 -hls_list_size 10 -hls_flags delete_segments+append_list /app/live/cam5/playlist.m3u8 &
 
 
-python3 -m http.server 10000 --directory /app/live
+ffmpeg -reconnect 1 ... -c:v copy -c:a aac /app/live/cam1/index.m3u8 &
