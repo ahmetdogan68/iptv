@@ -1,5 +1,5 @@
-FROM python:3.11-alpine
-RUN apk add --no-cache ffmpeg bash
+FROM alpine:3.19
+RUN apk add --no-cache ffmpeg python3 bash ttf-dejavu
 WORKDIR /app
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
