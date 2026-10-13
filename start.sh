@@ -19,10 +19,10 @@ ffmpeg -fflags +genpts -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 3
 sleep 4
 cat > /app/live/index.html <<'HTML'
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>4 CAM + 4 Radyo</title><script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script><style>body{margin:0;background:#000;display:flex;flex-wrap:wrap;gap:4px;padding:4px;justify-content:center}.b{width:360px;height:203px;background:#111;position:relative;border:1px solid #222}video{width:100%;height:100%}.t{position:absolute;top:2px;left:2px;background:red;color:#fff;font:10px Arial;padding:2px 6px}</style></head><body>
-<div class="b"><div class="t">CAM1 Anadolu + Aksaray'sesi </div><video id="v1" controls muted autoplay></video></div>
-<div class="b"><div class="t">CAM3 Sarachane + Aksaray FM</div><video id="v3" controls muted autoplay></video></div>
-<div class="b"><div class="t">CAM4 Taksim + Radyo 68 </div><video id="v4" controls muted autoplay></video></div>
-<div class="b"><div class="t">CAM5 Pierre Loti + Mavi Radyo </div><video id="v5" controls muted autoplay></video></div>
+<div class="b"><div class="t"> Anadolu + Aksaray'ın sesi </div><video id="v1" controls muted autoplay></video></div>
+<div class="b"><div class="t"> Sarachane + Aksaray FM</div><video id="v3" controls muted autoplay></video></div>
+<div class="b"><div class="t"> Taksim + Radyo 68 </div><video id="v4" controls muted autoplay></video></div>
+<div class="b"><div class="t"> Pierre Loti + Mavi Radyo </div><video id="v5" controls muted autoplay></video></div>
 <script>var L=[["v1","/cam1/playlist.m3u8"],["v3","/cam3/playlist.m3u8"],["v4","/cam4/playlist.m3u8"],["v5","/cam5/playlist.m3u8"]];L.forEach(function(a){var v=document.getElementById(a[0]);var h=new Hls({maxBufferLength:20});h.loadSource(a[1]);h.attachMedia(v);});</script></body></html>
 HTML
 nginx -g 'daemon off;'
