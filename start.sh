@@ -1,7 +1,6 @@
 #!/bin/sh
+echo "=== TV FINAL VERSIYON ==="
 mkdir -p /app/live/cam1 /app/live/cam2 /app/live/cam3 /app/live/cam4 /app/live/cam5 /app/live/cam6 /app/live/cam7 /app/live/cam8 /app/live/cam9 /app/live/cam10 /app/live/cam11 /app/live/cam12 /app/live/cam13 /app/live/cam14
-
-echo "14 KANAL BASLIYOR..."
 
 ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8" -i "https://stream.turkiyeradyolari.com:8100/stream" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 96k -f hls -hls_time 6 -hls_list_size 10 -hls_flags delete_segments+append_list /app/live/cam1/playlist.m3u8 &
 ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/beyazitkulesi2.stream/playlist.m3u8" -i "https://radyo.yayindakiler.com:4036/" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 96k -f hls -hls_time 6 -hls_list_size 10 -hls_flags delete_segments+append_list /app/live/cam2/playlist.m3u8 &
@@ -18,5 +17,5 @@ ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://ka
 ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/buyukcamlica.stream/playlist.m3u8" -i "https://moondigitaledge.radyotvonline.net/radyo7/playlist.m3u8" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 96k -f hls -hls_time 6 -hls_list_size 10 -hls_flags delete_segments+append_list /app/live/cam13/playlist.m3u8 &
 ffmpeg -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 30 -i "https://kamerayayin.ibb.istanbul/turistikcam/dragos.stream/playlist.m3u8" -i "https://moondigitaledge2.radyotvonline.net/radyo7arabesk/playlist.m3u8" -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 96k -f hls -hls_time 6 -hls_list_size 10 -hls_flags delete_segments+append_list /app/live/cam14/playlist.m3u8 &
 
-echo "TUM FFMPEG'LER BASLADI, HTTP SERVER 0.0.0.0:10000 ACIK"
-exec python3 -m http.server 10000 --bind 0.0.0.0 --directory /app/live
+echo "FFMPEG'LER BASLADI - HTTP 0.0.0.0:8080"
+python3 -m http.server 8080 --bind 0.0.0.0 --directory /app/live
