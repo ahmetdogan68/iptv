@@ -17,7 +17,6 @@ run_cam() {
 }
 
 run_cam "CAM1" "https://kamerayayin.ibb.istanbul/turistikcam/anadoluhisari.stream/playlist.m3u8" "https://stream.turkiyeradyolari.com:8100/stream" "/app/live/cam1"
-run_cam "CAM2" "http://20zp98.7039512.xyz:80/turgut.batur/6T36S34wGG/458552" "https://stream.turkiyeradyolari.com:8100/stream" "/app/live/cam2"
 run_cam "CAM3" "https://kamerayayin.ibb.istanbul/turistikcam/sarachane.stream/playlist.m3u8" "https://stream.turkiyeradyolari.com:9332/stream" "/app/live/cam3"
 run_cam "CAM4" "https://kamerayayin.ibb.istanbul/turistikcam/taksim.stream/playlist.m3u8" "https://radyo.yayindakiler.com:4022/" "/app/live/cam4"
 run_cam "CAM5" "https://kamerayayin.ibb.istanbul/turistikcam/pierreloti.stream/playlist.m3u8" "https://radyo.yayindakiler.com:4026/" "/app/live/cam5"
