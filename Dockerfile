@@ -1,6 +1,7 @@
-FROM alpine:latest
-RUN apk add --no-cache ffmpeg nginx bash dos2unix
-WORKDIR /app
-COPY . /app
-RUN mkdir -p /app/live /app/logs && dos2unix /app/start.sh /app/nginx.conf 2>/dev/null; sed -i 's/\r$//' /app/start.sh /app/nginx.conf; chmod +x /app/start.sh
+FROM nginx:alpine
+RUN apk add --no-cache ffmpeg bash
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY start.sh /app/start.sh
+COPY start_ffmpeg.sh /app/start_ffmpeg.sh
+RUN chmod +x /app/start.sh /app/start_ffmpeg.sh
 CMD ["/bin/sh", "/app/start.sh"]
