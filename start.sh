@@ -37,7 +37,7 @@ video{width:100%;height:100%;object-fit:cover;display:block}
 .label{position:absolute;top:0;left:0;background:rgba(255,0,0,0.9);color:#fff;font:700 12px Arial;padding:4px 8px;z-index:10}
 .url{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);color:#0f0;font:10px monospace;padding:3px 6px;z-index:10;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style></head><body>
-<div class="box"><div class="label">CAM1 Anadolu + Aksaray'ın Sesi</div><div class="url">https://iptv-radyo.fly.dev/cam1/playlist.m3u8 | Radyo: Aksaray'ın Sesi</div><video id="v1" controls muted autoplay playsinline></video></div>
+<div class="box"><div class="label">CAM1 Ulus Parkı + Aksaray'ın Sesi</div><div class="url">https://iptv-radyo.fly.dev/cam1/playlist.m3u8 | Radyo: Aksaray'ın Sesi</div><video id="v1" controls muted autoplay playsinline></video></div>
 <div class="box"><div class="label">CAM3 Saraçhane + Aksaray FM</div><div class="url">https://iptv-radyo.fly.dev/cam3/playlist.m3u8 | Radyo: Aksaray FM</div><video id="v3" controls muted autoplay playsinline></video></div>
 <div class="box"><div class="label">CAM4 Taksim + Radyo 68</div><div class="url">https://iptv-radyo.fly.dev/cam4/playlist.m3u8 | Radyo: Radyo 68 Aksaray</div><video id="v4" controls muted autoplay playsinline></video></div>
 <div class="box"><div class="label">CAM5 Pierre Loti + Mavi Radyo</div><div class="url">https://iptv-radyo.fly.dev/cam5/playlist.m3u8 | Radyo: Mavi Radyo</div><video id="v5" controls muted autoplay playsinline></video></div>
